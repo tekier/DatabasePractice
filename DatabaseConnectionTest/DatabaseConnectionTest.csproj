@@ -51,8 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseInitialiser.cs" />
-    <Compile Include="InitialiseDatabaseTest.cs" />
+    <Compile Include="DatabaseShould.cs" />
+    <Compile Include="InitialiseDatabaseClassShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +61,12 @@
   <ItemGroup>
     <Content Include="EmployeeList.txt" />
     <Content Include="RoomList.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DatabaseConnection\DatabaseConnection.csproj">
+      <Project>{6f507e8e-6fa1-41f8-8dac-9bb575c37031}</Project>
+      <Name>DatabaseConnection</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
