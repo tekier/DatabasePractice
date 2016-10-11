@@ -1,4 +1,5 @@
 ﻿using System.Collections.Specialized;
+using System.Runtime.CompilerServices;
 using System.Security.Policy;
 using FluentAssertions;
 using NUnit.Framework;
@@ -58,6 +59,26 @@ namespace DatabaseConnectionTest
             string output = databaseInitTestObject.ReadFile();
             string firstItemInLine = databaseInitTestObject.GetStringFromSplitLine(output, index);
             firstItemInLine.Should().Be(expectation);
+        }
+
+        [Test]
+        public void ReadAllLinesInTheFile()
+        {
+            SetUp();
+            int numberOfLinesRead = databaseInitTestObject.ReadWholeFile();
+            numberOfLinesRead.Should().Be(10);
+
+        }
+
+        [Test]
+        public void WriteFirstLineToDataBase()
+        {
+            SetUp();
+            string[] inputToDb = databaseInitTestObject.GetStringFromSplitLine(databaseInitTestObject.ReadFile());
+            string table = "Employee";
+            databaseInitTestObject.AddRowToDatabase(table, inputToDb);
+            string expectedOutput = "Renek";
+            
         }
 
     }
