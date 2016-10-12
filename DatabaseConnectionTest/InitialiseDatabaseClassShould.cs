@@ -29,21 +29,21 @@ namespace DatabaseConnectionTest
         {
             SetUp();
             string output = databaseInitTestObject.ReadFile();
-            output.Should().Be("Renek Smallings 1995-04-09 DEV");
+            output.Should().Be("Renek Smallings 1995-04-09 DEV 1");
         }
 
         [Test]
         public void ReadTheSecondLineOfTheInputFileCorrectly()
         {
             string output = databaseInitTestObject.ReadFile();
-            output.Should().Be("John Smith 1981-12-25 PR");
+            output.Should().Be("John Smith 1981-12-25 PR 1");
         }
 
         [Test]
         public void ReadTheThirdLineOfTheInputFileCorrectly()
         {
             string output = databaseInitTestObject.ReadFile();
-            output.Should().Be("Tegan Marbles 1994-08-30 MARKETING");
+            output.Should().Be("Tegan Marbles 1994-08-30 MARKETING 2");
         }
 
         [TestCase(0, "Renek")]

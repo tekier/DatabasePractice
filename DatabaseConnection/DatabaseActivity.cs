@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -8,10 +9,6 @@ namespace DatabaseConnection
     {
         private string connectionString =
             "Data Source=ASGLH-WL-11919;Initial Catalog=PracticeDatabase;Integrated Security=True";
-
-        public DatabaseActivity()
-        {
-        }
 
         public void AddRowToDatabase(string table, string[] input)
         {
@@ -64,6 +61,8 @@ namespace DatabaseConnection
             }
         }
 
+        
+
         private void ExecuteSqlStoredProcedure(SqlCommand command)
         {
             try
@@ -74,6 +73,26 @@ namespace DatabaseConnection
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+        public string GetRowFromEmployeeTableByName(string parameter, string name)
+        {
+            string output;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string newQuery = @"SELECT * FROM [dbo].[Employees] where SURNAME='Smallings'";
+                SqlCommand  command = new SqlCommand("SelectFromEmployees",conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.Add(new SqlParameter(parameter, name));
+                SqlDataReader reader = command.ExecuteReader();
+                bool test = reader.HasRows;
+                output = (string) reader["FORENAME"];
+                conn.Close();
+            }
+            return output;
         }
     }
 }

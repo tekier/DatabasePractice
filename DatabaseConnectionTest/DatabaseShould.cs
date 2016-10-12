@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DatabaseConnection;
+﻿using DatabaseConnection;
+using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
@@ -21,17 +17,19 @@ namespace DatabaseConnectionTest
         {
             databaseInitTestObject = new DatabaseInitialiser("EmployeeList.txt");
         }
-        
+
         [Test]
         public void WriteFirstLineToDataBase()
         {
             SetUp();
-            string[] inputToDb = databaseInitTestObject.GetStringFromSplitLine(databaseInitTestObject.ReadFile());
-            string table = "Employee";
-            databaseInitTestObject.DatabaseActivity.AddRowToDatabase(table, inputToDb);
+            string table = "Employees";
             string expectedOutput = "Renek";
-            string actualOutput = "";
+            string actualOutput = databaseInitTestObject.DatabaseActivity.GetRowFromEmployeeTableByName("@Surname",
+                "Smallings");
+            actualOutput.Should().Be(expectedOutput);
+            
+            //string[] inputToDb = databaseInitTestObject.GetStringFromSplitLine(databaseInitTestObject.ReadFile());
+            //databaseInitTestObject.DatabaseActivity.AddRowToDatabase(table, inputToDb);
         }
-
     }
 }

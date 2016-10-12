@@ -26,6 +26,7 @@ namespace DatabaseConnection
             string pathToFile = Path.Combine((AppDomain.CurrentDomain.BaseDirectory), "..", "..", filename);
             inputFile = new StreamReader(pathToFile);
             _databaseActivity = new DatabaseActivity();
+            int i = 0;
         }
 
         public string ReadFile()
@@ -60,6 +61,7 @@ namespace DatabaseConnection
             while (line != null)
             {
                 string[] splitLine = GetStringFromSplitLine(line);
+                DatabaseActivity.AddRowToDatabase("Employees", splitLine);
                 line = ReadFile();
                 lineNumber++;
             }
