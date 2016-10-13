@@ -22,14 +22,11 @@ namespace DatabaseConnectionTest
         public void WriteFirstLineToDataBase()
         {
             SetUp();
-            string table = "Employees";
             string expectedOutput = "Renek";
             string actualOutput = databaseInitTestObject.DatabaseActivity.GetRowFromEmployeeTableByName("@Surname",
                 "Smallings");
-            actualOutput.Should().Be(expectedOutput);
-            
-            //string[] inputToDb = databaseInitTestObject.GetStringFromSplitLine(databaseInitTestObject.ReadFile());
-            //databaseInitTestObject.DatabaseActivity.AddRowToDatabase(table, inputToDb);
+           actualOutput.Should().Be(expectedOutput);
+
         }
     }
 }

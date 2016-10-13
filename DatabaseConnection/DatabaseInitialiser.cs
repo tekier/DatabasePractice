@@ -61,7 +61,7 @@ namespace DatabaseConnection
             while (line != null)
             {
                 string[] splitLine = GetStringFromSplitLine(line);
-                DatabaseActivity.AddRowToDatabase("Employees", splitLine);
+                //DatabaseActivity.AddRowToDatabase("Employees", splitLine);
                 line = ReadFile();
                 lineNumber++;
             }

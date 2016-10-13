@@ -1,7 +1,9 @@
 ﻿using System;
 using System.CodeDom;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace DatabaseConnection
 {
@@ -25,7 +27,7 @@ namespace DatabaseConnection
             try
             {
                 SqlCommand command;
-                
+
                 if (table.ToLower().Equals("employees"))
                 {
                     command = new SqlCommand("InsertNewEmployee", conn)
@@ -39,7 +41,6 @@ namespace DatabaseConnection
                     command.Parameters.Add(new SqlParameter("@Room", input[4]));
 
                     ExecuteSqlStoredProcedure(command);
-
                 }
                 if (table.ToLower().Equals("rooms"))
                 {
@@ -50,10 +51,9 @@ namespace DatabaseConnection
                     command.Parameters.Add(new SqlParameter("@RoomSize", input[0]));
                     command.Parameters.Add(new SqlParameter("@FloorNum", input[1]));
                     command.Parameters.Add(new SqlParameter("@Capacity", input[3]));
-                    
+
                     ExecuteSqlStoredProcedure(command);
                 }
-
             }
             catch (NullReferenceException e)
             {
@@ -61,7 +61,6 @@ namespace DatabaseConnection
             }
         }
 
-        
 
         private void ExecuteSqlStoredProcedure(SqlCommand command)
         {
@@ -74,25 +73,65 @@ namespace DatabaseConnection
                 Console.WriteLine(e.Message);
             }
         }
-
+/*-----------------------------------------------------------------------------------------------------------------------------*/
         public string GetRowFromEmployeeTableByName(string parameter, string name)
         {
-            string output;
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                conn.Open();
-                string newQuery = @"SELECT * FROM [dbo].[Employees] where SURNAME='Smallings'";
-                SqlCommand  command = new SqlCommand("SelectFromEmployees",conn)
+                string output;
+                
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    output = ReadFromDatabase(parameter, name, conn);
+                    conn.Close();
+                }
+                return output;
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return "failed from get row from employee";
+            }
+        }
+
+        private static string ReadFromDatabase(string parameter, string name, SqlConnection conn)
+        {
+            try
+            {
+                SqlCommand command = new SqlCommand("SelectFromEmployees", conn)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
                 command.Parameters.Add(new SqlParameter(parameter, name));
-                SqlDataReader reader = command.ExecuteReader();
-                bool test = reader.HasRows;
-                output = (string) reader["FORENAME"];
-                conn.Close();
+                return ExecuteReaderCommand(command);
             }
-            return output;
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine(e.Message);
+                return "failed to from read from database";
+            }
+        }
+
+        private static string ExecuteReaderCommand(SqlCommand command)
+        {
+            
+            try
+            {
+                SqlDataReader reader = command.ExecuteReader();
+                List<string> list = new List<string>();
+                while(reader.Read())
+                {
+                    list.Add(reader["FORENAME"].ToString().Trim());
+                }
+                return list[0];
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "failed from execute reader";
+            }
         }
     }
 }
