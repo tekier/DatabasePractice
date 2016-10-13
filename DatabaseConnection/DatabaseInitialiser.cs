@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace DatabaseConnection
@@ -61,12 +62,34 @@ namespace DatabaseConnection
             while (line != null)
             {
                 string[] splitLine = GetStringFromSplitLine(line);
-                //DatabaseActivity.AddRowToDatabase("Employees", splitLine);
+                CreateTupledListAndAddToDatabase(splitLine, filename);
+                //DatabaseActivity.AddRowToDatabase("Employees", inputList);
                 line = ReadFile();
                 lineNumber++;
             }
             inputFile.Close();
             return lineNumber;
+        }
+
+        public void CreateTupledListAndAddToDatabase(string[] entries, string file)
+        {
+            List<Tuple<string, string>> returnList = new List<Tuple<string, string>>();
+            if (file == "EmployeeList.txt")
+            {
+                returnList.Add(Tuple.Create("@Forename", entries[0]));
+                returnList.Add(Tuple.Create("@Surname", entries[1]));
+                returnList.Add(Tuple.Create("@Dob", entries[2]));
+                returnList.Add(Tuple.Create("Role",entries[3]));
+                returnList.Add(Tuple.Create("@Room", entries[4]));
+                //DatabaseActivity.AddRowToDatabase(returnList, "InsertNewEmployee");
+            }
+            if (file == "RoomList.txt")
+            {
+                returnList.Add(Tuple.Create("@RoomSize", entries[0]));
+                returnList.Add(Tuple.Create("@Floor", entries[1]));
+                returnList.Add(Tuple.Create("@Capacity", entries[2]));
+                //DatabaseActivity.AddRowToDatabase(returnList, "InsertNewRoom");
+            }
         }
 
     }

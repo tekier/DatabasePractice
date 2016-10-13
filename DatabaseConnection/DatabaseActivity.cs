@@ -12,53 +12,42 @@ namespace DatabaseConnection
         private string connectionString =
             "Data Source=ASGLH-WL-11919;Initial Catalog=PracticeDatabase;Integrated Security=True";
 
-        public void AddRowToDatabase(string table, string[] input)
+        public void AddRowToDatabase(List<Tuple<string,string>> input, string storedProcedure)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                DirectToStoredProcedure(conn, table, input);
+                DirectToStoredProcedure(conn, input, storedProcedure);
                 conn.Close();
             }
         }
 
-        private void DirectToStoredProcedure(SqlConnection conn, string table, string[] input)
+        private void DirectToStoredProcedure(SqlConnection conn, List<Tuple<string, string>> parameters, string storedProc)
         {
             try
             {
-                SqlCommand command;
-
-                if (table.ToLower().Equals("employees"))
-                {
-                    command = new SqlCommand("InsertNewEmployee", conn)
-                    {
-                        CommandType = CommandType.StoredProcedure
-                    };
-                    command.Parameters.Add(new SqlParameter("@Forename", input[0]));
-                    command.Parameters.Add(new SqlParameter("@Surname", input[1]));
-                    command.Parameters.Add(new SqlParameter("@Dob", input[2]));
-                    command.Parameters.Add(new SqlParameter("@Role", input[3]));
-                    command.Parameters.Add(new SqlParameter("@Room", input[4]));
-
-                    ExecuteSqlStoredProcedure(command);
-                }
-                if (table.ToLower().Equals("rooms"))
-                {
-                    command = new SqlCommand("InsertNewRoom", conn)
-                    {
-                        CommandType = CommandType.StoredProcedure
-                    };
-                    command.Parameters.Add(new SqlParameter("@RoomSize", input[0]));
-                    command.Parameters.Add(new SqlParameter("@FloorNum", input[1]));
-                    command.Parameters.Add(new SqlParameter("@Capacity", input[2]));
-
-                    ExecuteSqlStoredProcedure(command);
-                }
+                SqlCommand command = BuildCommand(conn, parameters, storedProc);
+                ExecuteSqlStoredProcedure(command);
             }
             catch (NullReferenceException e)
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+        private static SqlCommand BuildCommand(SqlConnection conn, List<Tuple<string,string>> parameters, string storedProc)
+        {
+            var command = new SqlCommand(storedProc, conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+            foreach (var param in parameters)
+            {
+                var paramSpec = param.Item1;
+                var paramVal = param.Item2;
+                command.Parameters.Add(new SqlParameter(paramSpec, paramVal));
+            }
+            return command;
         }
 
 
@@ -73,17 +62,20 @@ namespace DatabaseConnection
                 Console.WriteLine(e.Message);
             }
         }
+
 /*-----------------------------------------------------------------------------------------------------------------------------*/
-        public string GetRowFromEmployeeTableByName(string parameter, string name)
+
+        public string GetRowFromTableByNameWithProcedure(List<Tuple<string, string>> parameters, string procedureName,
+            string columnName)
         {
             try
             {
                 string output;
-                
+
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    output = ReadFromDatabase(parameter, name, conn);
+                    output = ReadFromDatabase(parameters, conn, procedureName, columnName);
                     conn.Close();
                 }
                 return output;
@@ -91,46 +83,50 @@ namespace DatabaseConnection
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
-                return "failed from get row from employee";
+                return "failed to open the connection :(";
             }
         }
 
-        private static string ReadFromDatabase(string parameter, string name, SqlConnection conn)
+        private static string ReadFromDatabase(List<Tuple<string, string>> parameters, SqlConnection conn,
+            string procedure, string columnName)
         {
             try
             {
-                SqlCommand command = new SqlCommand("SelectFromEmployees", conn)
+                SqlCommand command = new SqlCommand(procedure, conn)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
-                command.Parameters.Add(new SqlParameter(parameter, name));
-                return ExecuteReaderCommand(command);
+                foreach (var param in parameters)
+                {
+                    var paramSpec = param.Item1;
+                    var paramVal = param.Item2;
+                    command.Parameters.Add(new SqlParameter(paramSpec, paramVal));
+                }
+                return ExecuteReaderCommand(command, columnName);
             }
             catch (InvalidOperationException e)
             {
                 Console.WriteLine(e.Message);
-                return "failed to from read from database";
+                return "failed to build command";
             }
         }
 
-        private static string ExecuteReaderCommand(SqlCommand command)
+        private static string ExecuteReaderCommand(SqlCommand command, string columnName)
         {
-            
             try
             {
                 SqlDataReader reader = command.ExecuteReader();
                 List<string> list = new List<string>();
-                while(reader.Read())
+                while (reader.Read())
                 {
-                    list.Add(reader["FORENAME"].ToString());
+                    list.Add(reader[columnName].ToString());
                 }
                 return list[0];
-
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return "failed from execute reader";
+                return "failed from execute reader command";
             }
         }
     }
