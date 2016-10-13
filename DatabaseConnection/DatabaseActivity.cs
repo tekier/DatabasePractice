@@ -50,7 +50,7 @@ namespace DatabaseConnection
                     };
                     command.Parameters.Add(new SqlParameter("@RoomSize", input[0]));
                     command.Parameters.Add(new SqlParameter("@FloorNum", input[1]));
-                    command.Parameters.Add(new SqlParameter("@Capacity", input[3]));
+                    command.Parameters.Add(new SqlParameter("@Capacity", input[2]));
 
                     ExecuteSqlStoredProcedure(command);
                 }
@@ -122,7 +122,7 @@ namespace DatabaseConnection
                 List<string> list = new List<string>();
                 while(reader.Read())
                 {
-                    list.Add(reader["FORENAME"].ToString().Trim());
+                    list.Add(reader["FORENAME"].ToString());
                 }
                 return list[0];
 
