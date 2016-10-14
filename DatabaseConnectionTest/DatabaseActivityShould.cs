@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace DatabaseConnectionTest
 {
     [TestFixture]
-    class DatabaseShould
+    class DatabaseActivityShould
     {
         // ReSharper disable once InconsistentNaming
         private DatabaseInitialiser databaseInitTestObject;
