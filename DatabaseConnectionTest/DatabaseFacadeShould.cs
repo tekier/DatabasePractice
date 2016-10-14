@@ -156,24 +156,24 @@ namespace DatabaseConnectionTest
 
         //}
 
-        [Test]
-        public void CorrectlyWriteNewEntryToTheRoomDatabase()
-        {
-            SetUp();
-            List<Tuple<string, string>> testList = new List<Tuple<string, string>>
-            {
-                Tuple.Create("@RoomSize","medium"),
-                Tuple.Create("@FloorNum","2"),
-                Tuple.Create("@Capacity","1")
-            };
+        //[Test]
+        //public void CorrectlyWriteNewEntryToTheRoomDatabase()
+        //{
+        //    SetUp();
+        //    List<Tuple<string, string>> testList = new List<Tuple<string, string>>
+        //    {
+        //        Tuple.Create("@RoomSize","medium"),
+        //        Tuple.Create("@FloorNum","2"),
+        //        Tuple.Create("@Capacity","1")
+        //    };
 
-            //facadeTestObject.AddRowTo("Rooms", testList);
-            facadeTestObject.AddParameter("@Capacity", "1");
-            facadeTestObject.AddParameter("@Floor", "2");
-            string expectedOutput = "medium";
-            string actualOutput = facadeTestObject.GetRowsUsing("Rooms", "ROOM_SIZE")[0];
+        //    //facadeTestObject.AddRowTo("Rooms", testList);
+        //    facadeTestObject.AddParameter("@Capacity", "1");
+        //    facadeTestObject.AddParameter("@Floor", "2");
+        //    string expectedOutput = "medium";
+        //    string actualOutput = facadeTestObject.GetRowsUsing("Rooms", "ROOM_SIZE")[0];
 
-            actualOutput.Should().Be(expectedOutput);
-        }
+        //    actualOutput.Should().Be(expectedOutput);
+        //}
     }
 }
