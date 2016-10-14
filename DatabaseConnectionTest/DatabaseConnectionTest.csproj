@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseFacadeShould.cs" />
     <Compile Include="DatabaseShould.cs" />
     <Compile Include="InitialiseDatabaseClassShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

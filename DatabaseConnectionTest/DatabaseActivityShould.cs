@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using DatabaseConnection;
 using FluentAssertions;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace DatabaseConnectionTest
 {

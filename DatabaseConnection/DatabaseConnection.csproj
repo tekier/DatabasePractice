@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseActivity.cs" />
+    <Compile Include="DatabaseFacade.cs" />
     <Compile Include="DatabaseInitialiser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
