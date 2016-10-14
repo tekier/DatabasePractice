@@ -73,6 +73,40 @@ namespace DatabaseConnectionTest
         }
 
         [Test]
+        public void CorrectlyRetrieveTheRightRowFromEmployeesTableBasedOnMultipleInputParameters()
+        {
+            SetUp();
+            string inputParam1 = "@Surname";
+            string inputParam2 = "@Role";
+            string inputParam2Value = "QA";
+            string inputParam1Value = "Nimusiima";
+            facadeTestObject.AddParameter(inputParam2, inputParam2Value);
+            facadeTestObject.AddParameter(inputParam1, inputParam1Value);
+            string actualOutput = facadeTestObject.GetRowsUsing("Employees", "FORENAME")[0];
+            string expectedOutput = "Jimmy";
+
+            actualOutput.Should().Be(expectedOutput);
+        }
+
+        [Test]
+        public void CorrectlyRetrieveTheRightRowFromRoomsTableBasedOnMultipleInputParameters()
+        {
+            SetUp();
+            string inputParam1 = "@RoomSize";
+            string inputParam2 = "@Floor";
+            string inputParam2Value = "3";
+            string inputParam1Value = "small";
+            facadeTestObject.AddParameter(inputParam2, inputParam2Value);
+            facadeTestObject.AddParameter(inputParam1, inputParam1Value);
+            string actualOutput = facadeTestObject.GetRowsUsing("Rooms", "CAPACITY")[0];
+            string expectedOutput = "3";
+
+            actualOutput.Should().Be(expectedOutput);
+        }
+
+
+
+        [Test]
         public void CorrectlyRetrieveMultipleRowsFromEmployeesTableBasedOnInputParameters()
         {
             SetUp();
@@ -121,5 +155,25 @@ namespace DatabaseConnectionTest
         //    actualOutput.Should().Be(expectedOutput);
 
         //}
+
+        [Test]
+        public void CorrectlyWriteNewEntryToTheRoomDatabase()
+        {
+            SetUp();
+            List<Tuple<string, string>> testList = new List<Tuple<string, string>>
+            {
+                Tuple.Create("@RoomSize","medium"),
+                Tuple.Create("@FloorNum","2"),
+                Tuple.Create("@Capacity","1")
+            };
+
+            //facadeTestObject.AddRowTo("Rooms", testList);
+            facadeTestObject.AddParameter("@Capacity", "1");
+            facadeTestObject.AddParameter("@Floor", "2");
+            string expectedOutput = "medium";
+            string actualOutput = facadeTestObject.GetRowsUsing("Rooms", "ROOM_SIZE")[0];
+
+            actualOutput.Should().Be(expectedOutput);
+        }
     }
 }
