@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Collections.Generic;
+using NUnit.Framework;
 using DatabaseConnection;
 using FluentAssertions;
 
@@ -77,10 +79,47 @@ namespace DatabaseConnectionTest
             string inputParam = "@Room";
             string inputParamValue = "1";
             facadeTestObject.AddParameter(inputParam, inputParamValue);
-            string actualOutput = facadeTestObject.GetRowsUsing("Employees", string.Empty)[0];
-            string expectedOutput = "1";
+            string actualOutput = facadeTestObject.GetRowsUsing("Employees", string.Empty)[8];
+            string expectedOutput = "Smith";
 
             actualOutput.Should().Be(expectedOutput);
         }
+
+        [Test]
+        public void CorrectlyRetrieveMultipleRowsFromRoomsTableBasedOnInputParameters()
+        {
+            SetUp();
+            string inputParam = "@RoomSize";
+            string inputParamValue = "small";
+            facadeTestObject.AddParameter(inputParam, inputParamValue);
+            string actualOutput = facadeTestObject.GetRowsUsing("Rooms", string.Empty)[(4*4)-1];
+            string expectedOutput = "5";
+
+            actualOutput.Should().Be(expectedOutput);
+        }
+
+        //This test passed. Removed to avoid adding multiple entries to the database as
+        //delete functionality has not been added in.
+        //[Test]
+        //public void CorrectlyWriteANewEntryToTheEmployeeDatabase()
+        //{
+        //    SetUp();
+        //    List<Tuple<string,string>> testList = new List<Tuple<string,string>>
+        //    {
+        //        Tuple.Create("@Forename","New"),
+        //        Tuple.Create("@Surname", "Entry"),
+        //        Tuple.Create("@Dob", "2016-10-14"),
+        //        Tuple.Create("@Role", "DEV"),
+        //        Tuple.Create("@Room", "1")
+        //    };
+
+        //    facadeTestObject.AddRowTo("Employees", testList);
+        //    facadeTestObject.AddParameter("@Surname", "Entry");
+        //    string expectedOutput = "DEV";
+        //    string actualOutput = facadeTestObject.GetRowsUsing("Employees","ROLE")[0];
+
+        //    actualOutput.Should().Be(expectedOutput);
+
+        //}
     }
 }
