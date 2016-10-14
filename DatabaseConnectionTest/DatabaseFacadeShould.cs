@@ -49,7 +49,7 @@ namespace DatabaseConnectionTest
             string inputParam = "@Forename";
             string inputParamValue = "Carlos";
             facadeTestObject.AddParameter(inputParam, inputParamValue);
-            string actualOutput = facadeTestObject.GetRowsUsing("Employees", "SURNAME");
+            string actualOutput = facadeTestObject.GetRowsUsing("Employees", "SURNAME")[0];
             string expectedOutput = "Matos";
 
             actualOutput.Should().Be(expectedOutput);
@@ -57,17 +57,30 @@ namespace DatabaseConnectionTest
         }
 
         [Test]
-        public void CorrectlyRetrieveTheRightRowFromRowsTableBasedOnInputParameters()
+        public void CorrectlyRetrieveTheRightRowFromRoomsTableBasedOnInputParameters()
         {
             SetUp();
             string inputParam = "@RoomId";
             string inputParamValue = "5";
             facadeTestObject.AddParameter(inputParam, inputParamValue);
-            string actualOutput = facadeTestObject.GetRowsUsing("Rooms", "ROOM_SIZE");
+            string actualOutput = facadeTestObject.GetRowsUsing("Rooms", "ROOM_SIZE")[0];
             string expectedOutput = "small";
 
             actualOutput.Should().Be(expectedOutput);
 
+        }
+
+        [Test]
+        public void CorrectlyRetrieveMultipleRowsFromEmployeesTableBasedOnInputParameters()
+        {
+            SetUp();
+            string inputParam = "@Room";
+            string inputParamValue = "1";
+            facadeTestObject.AddParameter(inputParam, inputParamValue);
+            string actualOutput = facadeTestObject.GetRowsUsing("Employees", string.Empty)[0];
+            string expectedOutput = "1";
+
+            actualOutput.Should().Be(expectedOutput);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Linq;
 
 namespace DatabaseConnection
 {
@@ -65,13 +66,12 @@ namespace DatabaseConnection
 
 /*-----------------------------------------------------------------------------------------------------------------------------*/
 
-        public string GetRowFromTableByNameWithProcedure(List<Tuple<string, string>> parameters, string procedureName,
+        public List<string> GetRowFromTableByNameWithProcedure(List<Tuple<string, string>> parameters, string procedureName,
             string columnName)
         {
+            List<string> output = new List<string>();
             try
             {
-                string output;
-
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
@@ -83,13 +83,15 @@ namespace DatabaseConnection
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
-                return "failed to open the connection :(";
+                output.Add("failed to open the connection");
+                return output;
             }
         }
 
-        private static string ReadFromDatabase(List<Tuple<string, string>> parameters, SqlConnection conn,
+        private static List<string> ReadFromDatabase(List<Tuple<string, string>> parameters, SqlConnection conn,
             string procedure, string columnName)
         {
+            List<string> output = new List<string>();
             try
             {
                 SqlCommand command = new SqlCommand(procedure, conn)
@@ -107,26 +109,33 @@ namespace DatabaseConnection
             catch (InvalidOperationException e)
             {
                 Console.WriteLine(e.Message);
-                return "failed to build command";
+                output.Add("failed to build command");
+                return output;
             }
         }
 
-        private static string ExecuteReaderCommand(SqlCommand command, string columnName)
+        private static List<string> ExecuteReaderCommand(SqlCommand command, string columnName)
         {
+            List<string> list = new List<string>();
             try
             {
                 SqlDataReader reader = command.ExecuteReader();
-                List<string> list = new List<string>();
                 while (reader.Read())
                 {
-                    list.Add(reader[columnName].ToString());
+                    for (int row = 0; row < reader.FieldCount; row++)
+                    {
+                        list.Add(String.IsNullOrEmpty(columnName)
+                            ? reader[row].ToString()
+                            : reader[columnName].ToString());
+                    }
                 }
-                return list[0];
+                return list;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return "failed from execute reader command";
+                list.Add("failed to execute from reader command");
+                return list;
             }
         }
     }

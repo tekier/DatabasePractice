@@ -29,7 +29,7 @@ namespace DatabaseConnectionTest
                 Tuple.Create("@Surname", "Smallings")
             };
             string actualOutput = databaseInitTestObject.DatabaseActivity.GetRowFromTableByNameWithProcedure(
-                parameters, "SelectFromEmployees", "FORENAME");
+                parameters, "SelectFromEmployees", "FORENAME")[0];
             actualOutput.Should().Be(expectedOutput);
         }
 
@@ -44,7 +44,7 @@ namespace DatabaseConnectionTest
                 Tuple.Create("@Surname", "Blos")
             };
             string actualOutput = databaseInitTestObject.DatabaseActivity.GetRowFromTableByNameWithProcedure(
-                parameters, "SelectFromEmployees", "FORENAME");
+                parameters, "SelectFromEmployees", "FORENAME")[0];
             actualOutput.Should().Be(expectedOutput);
         }
 
@@ -58,7 +58,7 @@ namespace DatabaseConnectionTest
                 Tuple.Create("@RoomId", "1")
             };
             string actualOutput = databaseInitTestObject.DatabaseActivity.GetRowFromTableByNameWithProcedure(
-                parameters, "SelectFromRooms", "CAPACITY");
+                parameters, "SelectFromRooms", "CAPACITY")[0];
             actualOutput.Should().Be(expectedOutput);
         }
 
@@ -73,7 +73,7 @@ namespace DatabaseConnectionTest
                 Tuple.Create("@RoomSize", "small")
             };
             string actualOutput = databaseInitTestObject.DatabaseActivity.GetRowFromTableByNameWithProcedure(
-                parameters, "SelectFromRooms", "CAPACITY");
+                parameters, "SelectFromRooms", "CAPACITY")[0];
             actualOutput.Should().Be(expectedOutput);
         }
     }

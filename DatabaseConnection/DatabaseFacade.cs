@@ -30,36 +30,37 @@ namespace DatabaseConnection
             return ListOfParameters.Count;
         }
 
-        public string GetRowsUsing(string whichTable, string column)
+        public List<string> GetRowsUsing(string whichTable, string column)
         {
+            List<string> returnValues = new List<string>();
             try
             {
-                string returnValue = "No table";
 
                 if (whichTable.ToLower() == "employees")
                 {
-                   returnValue = GetRowsFromEmployees(column);
+                   returnValues = GetRowsFromEmployees(column);
                 }
                 if (whichTable.ToLower() == "rooms")
                 {
-                   returnValue = GetRowsFromRooms(column);
+                   returnValues = GetRowsFromRooms(column);
                 }
-                return returnValue;
+                return returnValues;
             }
             catch (Exception e)
             {
                 
                 Console.WriteLine(e.Message);
-                return "failed";
+                returnValues.Add("failed");
+                return returnValues;
             }
         }
 
-        private string GetRowsFromEmployees(string column)
+        private List<string> GetRowsFromEmployees(string column)
         {
             return AccessObject.GetRowFromTableByNameWithProcedure(ListOfParameters, StoredProcedureToGetEmployee, column);
         }
 
-        private string GetRowsFromRooms(string column)
+        private List<string> GetRowsFromRooms(string column)
         {
             return AccessObject.GetRowFromTableByNameWithProcedure(ListOfParameters, StoredProcedureToGetRoom, column);
         }
