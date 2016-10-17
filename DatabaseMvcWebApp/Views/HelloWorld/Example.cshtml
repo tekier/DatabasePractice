@@ -1,0 +1,11 @@
+﻿@model ViewResult
+
+@{
+    ViewBag.Title = "Example";
+}
+
+<h2>title</h2>
+@for (int i = 0; i < ViewBag.NumTimes; i++)
+{
+    <h3>@ViewBag.Message</h3>
+}
