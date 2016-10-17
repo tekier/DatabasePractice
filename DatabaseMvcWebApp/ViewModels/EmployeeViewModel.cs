@@ -26,5 +26,41 @@ namespace DatabaseMvcWebApp.ViewModels
                 "Room Number"
             };
         }
+
+        public void SearchById(string input)
+        {
+            facade.AddParameter("@Id", input);
+        }
+        
+        public void SearchByFirstName(string input)
+        {
+            facade.AddParameter("@Forename", input);
+        }
+        
+        public void SearchBySurname(string input)
+        {
+            facade.AddParameter("@Surname", input);
+        }
+        
+        public void SearchByDob(string input)
+        {
+            facade.AddParameter("@Dob", input);
+        }
+        
+        public void SearchByRole(string input)
+        {
+            facade.AddParameter("@Role", input);
+        }
+        
+        public void SearchByRoom(string input)
+        {
+            facade.AddParameter("@Room", input);
+        }
+
+        public void RefreshTable()
+        {
+            employees = facade.GetRowsUsing("Employees", string.Empty);
+        }
+
     }
 }

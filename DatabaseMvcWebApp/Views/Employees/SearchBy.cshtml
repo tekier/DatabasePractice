@@ -4,18 +4,18 @@
     ViewBag.Title = "title";
 }
 
-<h2>All Employees in Database</h2>
-
 <style>
     table, th, td {
         border: 1px solid black;
         border-collapse: collapse;
     }
+
     th, td {
-        padding: 15px
+        padding: 15px;
     }
 </style>
 
+<h2>Filtered Employee Table</h2>
 <table>
     <tr>
         @foreach (var item in Model.coloumnNames)
@@ -26,39 +26,16 @@
     @{
         int count = 0;
         int columns = Model.coloumnNames.Count;
-        int rows = (Model.employees.Count)/columns;
+        int rows = (Model.employees.Count) / columns;
         for (int i = 0; i < rows; i++)
         {
             <tr>
                 @for (int j = 0; j < columns; j++)
                 {
                     <td>@Model.employees[count]</td>
-                    count = count+1;
+                    count = count + 1;
                 }
             </tr>
         }
     }
 </table>
-
-@using (Html.BeginForm())
-{
-    <b>id: </b>
-    <input type="text" name="id"/><br>
-   
-    <b>first name :</b>
-    <input type="text" name="forename"/><br>
-    
-    <b>surname :</b>
-    <input type="text" name="surname"/><br>
-    
-    <b>dob :</b>
-    <input type="text" name="dob"/><br>
-    
-    <b>role :</b>
-    <input type="text" name="role"/><br>
-    
-    <b>room :</b>
-    <input type="text" name="room"/><br>
-    
-    <input type="submit"/>
-}
