@@ -11,8 +11,18 @@
         border: 1px solid black;
         border-collapse: collapse;
     }
+
     th, td {
-        padding: 15px
+        padding: 15px;
+    }
+</style>
+
+<style>
+    label, input {
+        display: block;
+    }
+    label {
+        margin-bottom: 20px
     }
 </style>
 
@@ -26,39 +36,55 @@
     @{
         int count = 0;
         int columns = Model.coloumnNames.Count;
-        int rows = (Model.employees.Count)/columns;
+        int rows = (Model.employees.Count) / columns;
         for (int i = 0; i < rows; i++)
         {
             <tr>
                 @for (int j = 0; j < columns; j++)
                 {
                     <td>@Model.employees[count]</td>
-                    count = count+1;
+                    count = count + 1;
                 }
             </tr>
         }
     }
 </table>
 
+<h3>Search by these fields:</h3>
+
 @using (Html.BeginForm())
 {
-    <b>id: </b>
-    <input type="text" name="id"/><br>
-   
-    <b>first name :</b>
-    <input type="text" name="forename"/><br>
+    <label>
+        ID
+        <input type="text" name="id"/>
+    </label>
     
-    <b>surname :</b>
-    <input type="text" name="surname"/><br>
+    <label>
+        First Name
+        <input type="text" name="forename" />
+    </label>
     
-    <b>dob :</b>
-    <input type="text" name="dob"/><br>
+    <label>
+        Surname
+        <input type="text" name="surname" />
+    </label>
     
-    <b>role :</b>
-    <input type="text" name="role"/><br>
+    <label>
+        DOB
+        <input type="text" name="dob" />
+    </label>
     
-    <b>room :</b>
-    <input type="text" name="room"/><br>
+    <label>
+        Role
+        <input type="text" name="role" />
+    </label>
     
-    <input type="submit"/>
+    <label>
+        Room
+        <input type="text" name="room" />
+    </label>
+    
+    <label>
+        <input type="submit"/>
+    </label>
 }
