@@ -8,7 +8,7 @@
 
 <style>
     table, th, td {
-        border: 5px solid coral;
+        border: 3px solid gold;
         border-collapse: collapse;
     }
 
@@ -26,65 +26,81 @@
     }
 </style>
 
-<table>
-    <tr>
-        @foreach (var item in Model.coloumnNames)
-        {
-            <th>@item</th>
-        }
-    </tr>
-    @{
-        int count = 0;
-        int columns = Model.coloumnNames.Count;
-        int rows = (Model.employees.Count) / columns;
-        for (int i = 0; i < rows; i++)
-        {
-            <tr>
-                @for (int j = 0; j < columns; j++)
-                {
-                    <td>@Model.employees[count]</td>
-                    count = count + 1;
-                }
-            </tr>
-        }
+<style>
+    .on-left {
+        float: left;
     }
-</table>
+ 
+    .on-right {
+        float: right;
+        padding: 25px;
+        border-radius: 30px;
+        border: 2px solid lightsteelblue;
+        background-color: honeydew;
+    }
+</style>
 
-<h3>Search by these fields:</h3>
+<div class="on-left">
+    <table>
+        <tr>
+            @foreach (var item in Model.coloumnNames)
+            {
+                <th><h4><b>@item</b></h4></th>
+            }
+        </tr>
+        @{
+            int count = 0;
+            int columns = Model.coloumnNames.Count;
+            int rows = (Model.employees.Count) / columns;
+            for (int i = 0; i < rows; i++)
+            {
+                <tr>
+                    @for (int j = 0; j < columns; j++)
+                    {
+                        <td><h4>@Model.employees[count]</h4></td>
+                        count = count + 1;
+                    }
+                </tr>
+            }
+        }
+    </table>
+</div>
+<div class="on-right">
+    @using (Html.BeginForm())
+    {
+        <h3>Search by these fields:</h3>
+        <label>
+            ID
+            <input type="text" name="id" />
+        </label>
 
-@using (Html.BeginForm())
-{
-    <label>
-        ID
-        <input type="text" name="id"/>
-    </label>
-    
-    <label>
-        First Name
-        <input type="text" name="forename" />
-    </label>
-    
-    <label>
-        Surname
-        <input type="text" name="surname" />
-    </label>
-    
-    <label>
-        DOB
-        <input type="text" name="dob" />
-    </label>
-    
-    <label>
-        Role
-        <input type="text" name="role" />
-    </label>
-    
-    <label>
-        Room
-        <input type="text" name="room" />
-    </label>
-    
-    <label>
-        <input type="submit"/>
-    </label>
-}
+        <label>
+            First Name
+            <input type="text" name="forename" />
+        </label>
+
+        <label>
+            Surname
+            <input type="text" name="surname" />
+        </label>
+
+        <label>
+            DOB
+            <input type="text" name="dob" />
+        </label>
+
+        <label>
+            Role
+            <input type="text" name="role" />
+        </label>
+
+        <label>
+            Room
+            <input type="text" name="room" />
+        </label>
+
+        <label>
+            <input type="submit" />
+        </label>
+    }
+</div>

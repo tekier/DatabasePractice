@@ -4,11 +4,11 @@
     ViewBag.Title = "title";
 }
 
-<h2>All rooms in database</h2>
+<h2>All Rooms in database</h2>
 
 <style>
     table, th, td {
-        border: 5px solid blueviolet;
+        border: 3px solid gold;
         border-collapse: collapse;
     }
 
@@ -27,11 +27,27 @@
     }
 </style>
 
+<style>
+    .on-left {
+        float: left;
+    }
+
+    .on-right {
+        float: right;
+        padding: 25px;
+        border-radius: 30px;
+        border: 2px solid lightsteelblue;
+        background-color: honeydew;
+    }
+</style>
+
+
+<div class="on-left">
 <table>
     <tr>
         @foreach (var item in Model.coloumnNames)
         {
-            <th>@item</th>
+            <th><h4><b>@item</b></h4></th>
         }
     </tr>
     @{
@@ -43,18 +59,19 @@
             <tr>
                 @for (int j = 0; j < columns; j++)
                 {
-                    <td>@Model.rooms[count]</td>
+                    <td><h4>@Model.rooms[count]</h4></td>
                     count = count + 1;
                 }
             </tr>
         }
     }
 </table>
-
-<h3>Search by these fields:</h3>
+</div>
+<div class="on-right">
 
 @using (Html.BeginForm())
 {
+    <h3>Search by these fields:</h3>
     <label>
         ID
         <input type="text" name="id"/>
@@ -79,3 +96,5 @@
         <input type="submit" />
     </label>
 }
+</div>
+<div class="clear"></div>
