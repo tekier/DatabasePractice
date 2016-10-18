@@ -5,7 +5,8 @@ namespace DatabaseConnection
 {
     public class DatabaseFacade
     {
-        private DatabaseActivity AccessObject;
+        private DatabaseReadActivity ReadAccessObject;
+        private DatabaseWriteActivity WriteAccessObject;
         private const string StoredProcedureToGetEmployee = "SelectFromEmployees";
         private const string StoredProcedureToGetRoom = "SelectFromRooms";
         private const string StoredProcedureToAddEmployee = "InsertNewEmployee";
@@ -14,7 +15,8 @@ namespace DatabaseConnection
 
         public DatabaseFacade()
         {
-            AccessObject = new DatabaseActivity();
+            ReadAccessObject = new DatabaseReadActivity();
+            WriteAccessObject = new DatabaseWriteActivity();
             ListOfParameters = new List<Tuple<string, string>>();
         }
 
@@ -53,26 +55,26 @@ namespace DatabaseConnection
 
         private List<string> GetRowsFromEmployees(string column)
         {
-            return AccessObject.GetRowFromTableByNameWithProcedure(ListOfParameters, StoredProcedureToGetEmployee,
+            return ReadAccessObject.GetRowFromTableByNameWithProcedure(ListOfParameters, StoredProcedureToGetEmployee,
                 column);
         }
 
         private List<string> GetRowsFromRooms(string column)
         {
-            return AccessObject.GetRowFromTableByNameWithProcedure(ListOfParameters, StoredProcedureToGetRoom, column);
+            return ReadAccessObject.GetRowFromTableByNameWithProcedure(ListOfParameters, StoredProcedureToGetRoom, column);
         }
-
-        public void AddRowTo(string whichTable, List<Tuple<string, string>> inputList)
+/*-------------------------------------------------------------------------------------------------------------------------*/
+        public void AddRowTo(string whichTable)
         {
             try
             {
                 if (whichTable.ToLower() == "employees")
                 {
-                    AddRowToEmployees(inputList);
+                    AddRowToEmployees();
                 }
                 if (whichTable.ToLower() == "rooms")
                 {
-                    AddRowToRooms(inputList);
+                    AddRowToRooms();
                 }
             }
             catch (Exception exception)
@@ -81,14 +83,14 @@ namespace DatabaseConnection
             }
         }
 
-        private void AddRowToRooms(List<Tuple<string, string>> inputList)
+        private void AddRowToRooms()
         {
-            AccessObject.AddRowToDatabase(inputList, StoredProcedureToAddRoom);
+            WriteAccessObject.AddRowToDatabase(ListOfParameters, StoredProcedureToAddRoom);
         }
 
-        private void AddRowToEmployees(List<Tuple<string, string>> inputList)
+        private void AddRowToEmployees()
         {
-            AccessObject.AddRowToDatabase(inputList, StoredProcedureToAddEmployee);   
+            WriteAccessObject.AddRowToDatabase(ListOfParameters, StoredProcedureToAddEmployee);
         }
     }
 }

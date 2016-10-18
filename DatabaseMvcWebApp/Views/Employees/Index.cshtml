@@ -21,8 +21,9 @@
     label, input {
         display: block;
     }
+
     label {
-        margin-bottom: 20px
+        margin-bottom: 20px;
     }
 </style>
 
@@ -30,7 +31,7 @@
     .on-left {
         float: left;
     }
- 
+
     .on-right {
         float: right;
         padding: 25px;
@@ -65,8 +66,43 @@
         }
     </table>
 </div>
+
 <div class="on-right">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Add Employee!", "Employees", FormMethod.Post))
+    {
+        <h3>Add a new Employee:</h3>
+
+        <label>
+            First Name <i> (optional)</i>
+            <input type="text" name="forename" />
+        </label>
+
+        <label>
+            Surname
+            <input type="text" name="surname" />
+        </label>
+
+        <label>
+            DOB <i> (optional) </i>[yyyy-mm-dd]
+            <input type="text" name="dob" />
+        </label>
+
+        <label>
+            Role
+            <input type="text" name="role" />
+        </label>
+
+        <label>
+            Room
+            <input type="text" name="room" />
+        </label>
+
+        <label>
+            <input type="submit" value="AddNewEmployee"/>
+        </label>
+    }
+
+    @using (Html.BeginForm("Index", "Employees", FormMethod.Post))
     {
         <h3>Search by these fields:</h3>
         <label>
@@ -100,7 +136,7 @@
         </label>
 
         <label>
-            <input type="submit" />
+            <input type="submit" value="Filter"/>
         </label>
     }
 </div>

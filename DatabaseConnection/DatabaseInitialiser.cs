@@ -8,9 +8,9 @@ namespace DatabaseConnection
     {
         public virtual string filename { get; set; }
 
-        public DatabaseActivity DatabaseActivity
+        public DatabaseReadActivity DatabaseReadActivity
         {
-            get { return _databaseActivity; }
+            get { return _databaseReadActivity; }
         }
 
         //private StreamReader inputFile = new StreamReader();
@@ -18,7 +18,7 @@ namespace DatabaseConnection
         private string pathToFile;
         private char[] delimiters = {' '};
 
-        private readonly DatabaseActivity _databaseActivity;
+        private readonly DatabaseReadActivity _databaseReadActivity;
 
 
         public DatabaseInitialiser(string filename)
@@ -26,7 +26,7 @@ namespace DatabaseConnection
             this.filename = filename;
             string pathToFile = Path.Combine((AppDomain.CurrentDomain.BaseDirectory), "..", "..", filename);
             inputFile = new StreamReader(pathToFile);
-            _databaseActivity = new DatabaseActivity();
+            _databaseReadActivity = new DatabaseReadActivity();
             int i = 0;
         }
 
@@ -63,7 +63,7 @@ namespace DatabaseConnection
             {
                 string[] splitLine = GetStringFromSplitLine(line);
                 CreateTupledListAndAddToDatabase(splitLine, filename);
-                //DatabaseActivity.AddRowToDatabase("Employees", inputList);
+                //DatabaseReadActivity.AddRowToDatabase("Employees", inputList);
                 line = ReadFile();
                 lineNumber++;
             }
@@ -81,14 +81,14 @@ namespace DatabaseConnection
                 returnList.Add(Tuple.Create("@Dob", entries[2]));
                 returnList.Add(Tuple.Create("Role",entries[3]));
                 returnList.Add(Tuple.Create("@Room", entries[4]));
-                //DatabaseActivity.AddRowToDatabase(returnList, "InsertNewEmployee");
+                //DatabaseReadActivity.AddRowToDatabase(returnList, "InsertNewEmployee");
             }
             if (file == "RoomList.txt")
             {
                 returnList.Add(Tuple.Create("@RoomSize", entries[0]));
                 returnList.Add(Tuple.Create("@Floor", entries[1]));
                 returnList.Add(Tuple.Create("@Capacity", entries[2]));
-                //DatabaseActivity.AddRowToDatabase(returnList, "InsertNewRoom");
+                //DatabaseReadActivity.AddRowToDatabase(returnList, "InsertNewRoom");
             }
         }
 

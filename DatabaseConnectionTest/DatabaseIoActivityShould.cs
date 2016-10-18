@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace DatabaseConnectionTest
 {
     [TestFixture]
-    class DatabaseActivityShould
+    class DatabaseIoActivityShould
     {
         // ReSharper disable once InconsistentNaming
         private DatabaseInitialiser databaseInitTestObject;
@@ -28,7 +28,7 @@ namespace DatabaseConnectionTest
             {
                 Tuple.Create("@Surname", "Smallings")
             };
-            string actualOutput = databaseInitTestObject.DatabaseActivity.GetRowFromTableByNameWithProcedure(
+            string actualOutput = databaseInitTestObject.DatabaseReadActivity.GetRowFromTableByNameWithProcedure(
                 parameters, "SelectFromEmployees", "FORENAME")[0];
             actualOutput.Should().Be(expectedOutput);
         }
@@ -43,7 +43,7 @@ namespace DatabaseConnectionTest
                 Tuple.Create("@Room", "3"),
                 Tuple.Create("@Surname", "Blos")
             };
-            string actualOutput = databaseInitTestObject.DatabaseActivity.GetRowFromTableByNameWithProcedure(
+            string actualOutput = databaseInitTestObject.DatabaseReadActivity.GetRowFromTableByNameWithProcedure(
                 parameters, "SelectFromEmployees", "FORENAME")[0];
             actualOutput.Should().Be(expectedOutput);
         }
@@ -57,7 +57,7 @@ namespace DatabaseConnectionTest
             {
                 Tuple.Create("@RoomId", "1")
             };
-            string actualOutput = databaseInitTestObject.DatabaseActivity.GetRowFromTableByNameWithProcedure(
+            string actualOutput = databaseInitTestObject.DatabaseReadActivity.GetRowFromTableByNameWithProcedure(
                 parameters, "SelectFromRooms", "CAPACITY")[0];
             actualOutput.Should().Be(expectedOutput);
         }
@@ -72,7 +72,7 @@ namespace DatabaseConnectionTest
                 Tuple.Create("@Floor", "3"),
                 Tuple.Create("@RoomSize", "small")
             };
-            string actualOutput = databaseInitTestObject.DatabaseActivity.GetRowFromTableByNameWithProcedure(
+            string actualOutput = databaseInitTestObject.DatabaseReadActivity.GetRowFromTableByNameWithProcedure(
                 parameters, "SelectFromRooms", "CAPACITY")[0];
             actualOutput.Should().Be(expectedOutput);
         }

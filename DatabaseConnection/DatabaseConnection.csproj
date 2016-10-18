@@ -39,9 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseActivity.cs" />
+    <Compile Include="DatabaseDeleteActivity.cs" />
+    <Compile Include="DatabaseReadActivity.cs" />
     <Compile Include="DatabaseFacade.cs" />
     <Compile Include="DatabaseInitialiser.cs" />
+    <Compile Include="DatabaseWriteActivity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

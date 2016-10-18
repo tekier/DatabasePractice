@@ -12,7 +12,7 @@ namespace DatabaseMvcWebApp.Controllers
     public class EmployeesController : Controller
     {
         // GET: Employees
-        private EmployeeViewModel model = new EmployeeViewModel("Employees", string.Empty);
+        private EmployeeViewModel model = new EmployeeViewModel(string.Empty);
 
         public ActionResult Index()
         {
@@ -47,8 +47,41 @@ namespace DatabaseMvcWebApp.Controllers
             {
                 model.SearchByRoom(room);
             }
+
             model.RefreshTable();
             return View(model);
+        }
+
+        [HttpPost]
+        public RedirectToRouteResult AddNewEmployee(string forename = null, string surname = null, string dob = null,
+            string role = null, string room = null)
+        {
+
+            if (!forename.IsNullOrWhiteSpace())
+            {
+                model.SearchByFirstName(forename);
+            }
+            if (!surname.IsNullOrWhiteSpace())
+            {
+                model.SearchBySurname(surname);
+            }
+            if (!dob.IsNullOrWhiteSpace())
+            {
+                model.SearchByDob(dob);
+            }
+            if (!role.IsNullOrWhiteSpace())
+            {
+                model.SearchByRole(role);
+            }
+            if (!room.IsNullOrWhiteSpace())
+            {
+                model.SearchByRoom(room);
+            }
+            if (room != null)
+            {
+                model.AddNewEmployee();
+            } 
+            return RedirectToAction("Index");
         }
     }
 }

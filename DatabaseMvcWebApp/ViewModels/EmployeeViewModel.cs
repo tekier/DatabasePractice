@@ -11,8 +11,9 @@ namespace DatabaseMvcWebApp.ViewModels
         public List<string> employees;
         public List<string> coloumnNames;
         private DatabaseFacade facade;
+        private const string tableName = "Employees";
 
-        public EmployeeViewModel(string tableName, string column)
+        public EmployeeViewModel(string column)
         {
             facade = new DatabaseFacade();
             employees = facade.GetRowsUsing(tableName, column);
@@ -25,6 +26,11 @@ namespace DatabaseMvcWebApp.ViewModels
                 "Role",
                 "Room Number"
             };
+        }
+
+        public void AddNewEmployee()
+        {
+            facade.AddRowTo("Employees");
         }
 
         public void SearchById(string input)

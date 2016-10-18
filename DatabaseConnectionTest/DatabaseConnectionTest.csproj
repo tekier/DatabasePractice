@@ -51,8 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseDeleteActivityShould.cs" />
     <Compile Include="DatabaseFacadeShould.cs" />
-    <Compile Include="DatabaseActivityShould.cs" />
+    <Compile Include="DatabaseIoActivityShould.cs" />
     <Compile Include="InitialiseDatabaseClassShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
