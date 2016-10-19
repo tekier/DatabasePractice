@@ -30,7 +30,12 @@ namespace DatabaseMvcWebApp.ViewModels
 
         public void AddNewEmployee()
         {
-            facade.AddRowTo("Employees");
+            facade.AddRowTo(tableName);
+        }
+
+        public void DeleteEmployee()
+        {
+            facade.DeleteRowFrom(tableName);
         }
 
         public void SearchById(string input)

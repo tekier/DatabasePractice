@@ -11,8 +11,9 @@ namespace DatabaseMvcWebApp.ViewModels
         public List<string> rooms;
         public List<string> coloumnNames;
         private DatabaseFacade facade;
+        private const string tableName = "Rooms";
 
-        public RoomViewModel(string tableName, string column)
+        public RoomViewModel(string column)
         {
             facade = new DatabaseFacade();
             rooms = facade.GetRowsUsing(tableName, column);
@@ -24,23 +25,28 @@ namespace DatabaseMvcWebApp.ViewModels
                 "Capacity"
             };
         }
+        
+        public void AddNewRoom()
+        {
+            facade.AddRowTo(tableName);
+        }
 
         public void SearchById(string input)
         {
             facade.AddParameter("@RoomId", input);
         }
 
-        public void SearchByFirstName(string input)
+        public void SearchBySize(string input)
         {
             facade.AddParameter("@RoomSize", input);
         }
 
-        public void SearchBySurname(string input)
+        public void SearchByFloor(string input)
         {
             facade.AddParameter("@Floor", input);
         }
 
-        public void SearchByDob(string input)
+        public void SearchByCapacity(string input)
         {
             facade.AddParameter("@Capacity", input);
         }

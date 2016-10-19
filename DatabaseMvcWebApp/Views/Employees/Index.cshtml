@@ -1,5 +1,5 @@
 ﻿@model DatabaseMvcWebApp.ViewModels.EmployeeViewModel
-
+<!--Employees-->
 @{
     ViewBag.Title = "title";
 }
@@ -12,25 +12,17 @@
         border-collapse: collapse;
     }
 
-    th, td {
-        padding: 15px;
-    }
+    th, td { padding: 15px; }
 </style>
 
 <style>
-    label, input {
-        display: block;
-    }
+    label, input { display: block; }
 
-    label {
-        margin-bottom: 20px;
-    }
+    label { margin-bottom: 20px; }
 </style>
 
 <style>
-    .on-left {
-        float: left;
-    }
+    .on-left { float: left; }
 
     .on-right {
         float: right;
@@ -46,19 +38,25 @@
         <tr>
             @foreach (var item in Model.coloumnNames)
             {
-                <th><h4><b>@item</b></h4></th>
+                <th>
+                    <h4>
+                        <b>@item</b>
+                    </h4>
+                </th>
             }
         </tr>
         @{
             int count = 0;
             int columns = Model.coloumnNames.Count;
-            int rows = (Model.employees.Count) / columns;
+            int rows = (Model.employees.Count)/columns;
             for (int i = 0; i < rows; i++)
             {
                 <tr>
                     @for (int j = 0; j < columns; j++)
                     {
-                        <td><h4>@Model.employees[count]</h4></td>
+                        <td>
+                            <h4>@Model.employees[count]</h4>
+                        </td>
                         count = count + 1;
                     }
                 </tr>
@@ -68,75 +66,113 @@
 </div>
 
 <div class="on-right">
-    @using (Html.BeginForm("Add Employee!", "Employees", FormMethod.Post))
-    {
-        <h3>Add a new Employee:</h3>
-
-        <label>
-            First Name <i> (optional)</i>
-            <input type="text" name="forename" />
-        </label>
-
-        <label>
-            Surname
-            <input type="text" name="surname" />
-        </label>
-
-        <label>
-            DOB <i> (optional) </i>[yyyy-mm-dd]
-            <input type="text" name="dob" />
-        </label>
-
-        <label>
-            Role
-            <input type="text" name="role" />
-        </label>
-
-        <label>
-            Room
-            <input type="text" name="room" />
-        </label>
-
-        <label>
-            <input type="submit" value="AddNewEmployee"/>
-        </label>
-    }
-
+    
     @using (Html.BeginForm("Index", "Employees", FormMethod.Post))
     {
         <h3>Search by these fields:</h3>
         <label>
             ID
-            <input type="text" name="id" />
+            <input type="text" name="id"/>
         </label>
 
         <label>
             First Name
-            <input type="text" name="forename" />
+            <input type="text" name="forename"/>
         </label>
 
         <label>
             Surname
-            <input type="text" name="surname" />
+            <input type="text" name="surname"/>
         </label>
 
         <label>
             DOB
-            <input type="text" name="dob" />
+            <input type="text" name="dob" placeholder="YYYY-MM-DD"/>
         </label>
 
         <label>
             Role
-            <input type="text" name="role" />
+            <input type="text" name="role"/>
         </label>
 
         <label>
             Room
-            <input type="text" name="room" />
+            <input type="text" name="room"/>
         </label>
 
         <label>
             <input type="submit" value="Filter"/>
         </label>
     }
+    
+    @using (Html.BeginForm("AddNewEmployee", "Employees", FormMethod.Post))
+    {
+        <h3>Add a new employee:</h3>
+
+        <label>
+            First Name<i> (optional)</i>
+            <input type="text" name="forename" />
+        </label>
+
+        <label>
+            Surname
+            <input type="text" name="surname" />
+        </label>
+
+        <label>
+            DOB<i> (optional) </i>
+            <input type="text" name="dob" placeholder="YYYY-MM-DD"/>
+        </label>
+
+        <label>
+            Role
+            <input type="text" name="role" />
+        </label>
+
+        <label>
+            Room
+            <input type="text" name="room" />
+        </label>
+
+        <label>
+            <input type="submit" value="Add employee" />
+        </label>
+    }
+
+    @using (Html.BeginForm("DeleteEmployee", "Employees", FormMethod.Post))
+    {
+        <h3>Delete an existing employee:</h3>
+
+        <label>
+            First Name
+            <input type="text" name="forename"/>
+        </label>
+
+        <label>
+            Surname
+            <input type="text" name="surname"/>
+        </label>
+
+        <label>
+            DOB
+            <input type="text" name="dob" placeholder="YYYY-MM-DD"/>
+        </label>
+
+        <label>
+            Role
+            <input type="text" name="role"/>
+        </label>
+
+        <label>
+            Room
+            <input type="text" name="room"/>
+        </label>
+
+        <label>
+            <input type="submit" value="Delete employee"/>
+        </label>
+    }
+
+    
 </div>
+<div class="clear"></div>

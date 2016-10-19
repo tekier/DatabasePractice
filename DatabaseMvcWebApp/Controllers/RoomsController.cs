@@ -11,7 +11,7 @@ namespace DatabaseMvcWebApp.Controllers
     public class RoomsController : Controller
     {
         // GET: Rooms
-        RoomViewModel model = new RoomViewModel("Rooms", String.Empty);
+        RoomViewModel model = new RoomViewModel(String.Empty);
         public ActionResult Index()
         {
             return View(model);
@@ -26,18 +26,40 @@ namespace DatabaseMvcWebApp.Controllers
             }
             if (!size.IsNullOrWhiteSpace())
             {
-                model.SearchByFirstName(size);
+                model.SearchBySize(size);
             }
             if (!floor.IsNullOrWhiteSpace())
             {
-                model.SearchBySurname(floor);
+                model.SearchByFloor(floor);
             }
             if (!capacity.IsNullOrWhiteSpace())
             {
-                model.SearchByDob(capacity);
+                model.SearchByCapacity(capacity);
             }
             model.RefreshTable();
             return View(model);
+        }
+
+        [HttpPost]
+        public RedirectToRouteResult AddNewRoom(string size = null, string floor = null, string capacity = null)
+        {
+
+            if (!size.IsNullOrWhiteSpace())
+            {
+                model.SearchBySize(size);
+            }
+            if (!floor.IsNullOrWhiteSpace())
+            {
+                model.SearchByFloor(floor);
+            }
+            if (!capacity.IsNullOrWhiteSpace())
+            {
+                model.SearchByCapacity(capacity);
+            }
+            
+            model.AddNewRoom();
+
+            return RedirectToAction("Index");
         }
     }
 }

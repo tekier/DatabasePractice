@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using DatabaseConnection;
@@ -81,6 +82,51 @@ namespace DatabaseMvcWebApp.Controllers
             {
                 model.AddNewEmployee();
             } 
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public RedirectToRouteResult DeleteEmployee(string id = null, string forename = null, string surname = null, string dob = null,
+            string role = null, string room = null)
+        {
+            int count = 0;
+
+            if (!id.IsNullOrWhiteSpace())
+            {
+                model.SearchById(id);
+                count++;
+            }
+            if (!forename.IsNullOrWhiteSpace())
+            {
+                model.SearchByFirstName(forename);
+                count++;
+            }
+            if (!surname.IsNullOrWhiteSpace())
+            {
+                model.SearchBySurname(surname);
+                count++;
+            }
+            if (!dob.IsNullOrWhiteSpace())
+            {
+                model.SearchByDob(dob);
+                count++;
+            }
+            if (!role.IsNullOrWhiteSpace())
+            {
+                model.SearchByRole(role);
+                count++;
+            }
+            if (!room.IsNullOrWhiteSpace())
+            {
+                model.SearchByRoom(room);
+                count++;
+            }
+
+            if (count > 0)
+            {
+                model.DeleteEmployee();
+            }
+
             return RedirectToAction("Index");
         }
     }

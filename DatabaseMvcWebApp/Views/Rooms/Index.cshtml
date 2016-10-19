@@ -12,25 +12,17 @@
         border-collapse: collapse;
     }
 
-    th, td {
-        padding: 15px;
-    }
+    th, td { padding: 15px; }
 </style>
 
 <style>
-    label, input {
-        display: block;
-    }
+    label, input { display: block; }
 
-    label {
-        margin-bottom: 20px;
-    }
+    label { margin-bottom: 20px; }
 </style>
 
 <style>
-    .on-left {
-        float: left;
-    }
+    .on-left { float: left; }
 
     .on-right {
         float: right;
@@ -43,58 +35,89 @@
 
 
 <div class="on-left">
-<table>
-    <tr>
-        @foreach (var item in Model.coloumnNames)
-        {
-            <th><h4><b>@item</b></h4></th>
+    <table>
+        <tr>
+            @foreach (var item in Model.coloumnNames)
+            {
+                <th>
+                    <h4>
+                        <b>@item</b>
+                    </h4>
+                </th>
+            }
+        </tr>
+        @{
+            int count = 0;
+            int columns = Model.coloumnNames.Count;
+            int rows = (Model.rooms.Count)/columns;
+            for (int i = 0; i < rows; i++)
+            {
+                <tr>
+                    @for (int j = 0; j < columns; j++)
+                    {
+                        <td>
+                            <h4>@Model.rooms[count]</h4>
+                        </td>
+                        count = count + 1;
+                    }
+                </tr>
+            }
         }
-    </tr>
-    @{
-        int count = 0;
-        int columns = Model.coloumnNames.Count;
-        int rows = (Model.rooms.Count) / columns;
-        for (int i = 0; i < rows; i++)
-        {
-            <tr>
-                @for (int j = 0; j < columns; j++)
-                {
-                    <td><h4>@Model.rooms[count]</h4></td>
-                    count = count + 1;
-                }
-            </tr>
-        }
-    }
-</table>
+    </table>
 </div>
+
 <div class="on-right">
 
-@using (Html.BeginForm())
-{
-    <h3>Search by these fields:</h3>
-    <label>
-        ID
-        <input type="text" name="id"/>
-    </label>
+    @using (Html.BeginForm("Index", "Rooms", FormMethod.Post))
+    {
+        <h3>Search by these fields:</h3>
+        <label>
+            ID
+            <input type="text" name="id"/>
+        </label>
 
-    <label>
-        Size
-        <input type="text" name="size"/>
-    </label>
+        <label>
+            Size
+            <input type="text" name="size"/>
+        </label>
 
-    <label>
-        Floor
-        <input type="text" name="floor"/>
-    </label>
+        <label>
+            Floor
+            <input type="text" name="floor"/>
+        </label>
 
-    <label>
-        Capacity
-        <input type="text" name="capacity"/>
-    </label>
+        <label>
+            Capacity
+            <input type="text" name="capacity"/>
+        </label>
 
-    <label>
-        <input type="submit" />
-    </label>
-}
+        <label>
+            <input type="submit" value="Filter">
+        </label>
+    }
+    
+    @using (Html.BeginForm("AddNewRoom", "Rooms", FormMethod.Post))
+    {
+        <h3>Add a new room:</h3>
+
+        <label>
+            Size<i> (optional)</i>
+            <input type="text" name="size" />
+        </label>
+
+        <label>
+            Floor<i> (optional)</i>
+            <input type="text" name="floor" />
+        </label>
+
+        <label>
+            Capacity<i> (optional) </i>
+            <input type="text" name="capacity" />
+        </label>
+
+        <label>
+            <input type="submit" value="Add room" />
+        </label>
+    }
 </div>
 <div class="clear"></div>

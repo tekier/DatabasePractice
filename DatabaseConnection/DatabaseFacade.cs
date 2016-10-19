@@ -7,16 +7,20 @@ namespace DatabaseConnection
     {
         private DatabaseReadActivity ReadAccessObject;
         private DatabaseWriteActivity WriteAccessObject;
+        private DatabaseDeleteActivity DeleteAccessObject;
         private const string StoredProcedureToGetEmployee = "SelectFromEmployees";
         private const string StoredProcedureToGetRoom = "SelectFromRooms";
         private const string StoredProcedureToAddEmployee = "InsertNewEmployee";
         private const string StoredProcedureToAddRoom = "InsertNewRoom";
+        private const string StoredProcedureToDeleteEmployee = "DeleteFromEmployees";
+        private const string StoredProcedureToDeleteRoom = "DeleteFromRooms";
         private List<Tuple<string, string>> ListOfParameters;
 
         public DatabaseFacade()
         {
             ReadAccessObject = new DatabaseReadActivity();
             WriteAccessObject = new DatabaseWriteActivity();
+            DeleteAccessObject = new DatabaseDeleteActivity();
             ListOfParameters = new List<Tuple<string, string>>();
         }
 
@@ -92,5 +96,36 @@ namespace DatabaseConnection
         {
             WriteAccessObject.AddRowToDatabase(ListOfParameters, StoredProcedureToAddEmployee);
         }
+
+        /*-------------------------------------------------------------------------------------------------------------*/
+        public void DeleteRowFrom(string whichTable)
+        {
+            try
+            {
+                if (whichTable.ToLower() == "employees")
+                {
+                    DeleteRowFromEmployees();
+                }
+                if (whichTable.ToLower() == "rooms")
+                {
+                    DeleteRowFromRooms();
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+        }
+
+        private void DeleteRowFromRooms()
+        {
+            DeleteAccessObject.DeleteRowFromTableByNameWithStoredProcedure(ListOfParameters, StoredProcedureToDeleteRoom);
+        }
+
+        private void DeleteRowFromEmployees()
+        {
+            DeleteAccessObject.DeleteRowFromTableByNameWithStoredProcedure(ListOfParameters, StoredProcedureToDeleteEmployee);
+        }
     }
+
 }
