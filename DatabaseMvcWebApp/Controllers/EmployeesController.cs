@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Web;
@@ -22,8 +23,14 @@ namespace DatabaseMvcWebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(string id = null, string forename = null, string surname = null, string dob = null,
-            string role = null, string room = null)
+        public ActionResult Index(
+            [RegularExpression("([1-9][0-9]*)")]string id = null,
+            string forename = null,
+            string surname = null,
+            [DataType(DataType.Date)]string dob = null,
+            string role = null,
+            [RegularExpression("([1-9][0-9]*)")]string room = null
+            )
         {
             if (!id.IsNullOrWhiteSpace())
             {
