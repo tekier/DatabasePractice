@@ -70,6 +70,7 @@
 
     @using (Html.BeginForm("Index", "Rooms", FormMethod.Post))
     {
+        @Html.AntiForgeryToken()
         <h3>Search by these fields:</h3>
         <label>
             ID
@@ -98,6 +99,7 @@
     
     @using (Html.BeginForm("AddNewRoom", "Rooms", FormMethod.Post))
     {
+        @Html.AntiForgeryToken()
         <h3>Add a new room:</h3>
 
         <label>

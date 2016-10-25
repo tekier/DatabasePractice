@@ -21,6 +21,7 @@ namespace DatabaseMvcWebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Index(string id = null, string forename = null, string surname = null, string dob = null,
             string role = null, string room = null)
         {
@@ -54,6 +55,7 @@ namespace DatabaseMvcWebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public RedirectToRouteResult AddNewEmployee(string forename = null, string surname = null, string dob = null,
             string role = null, string room = null)
         {
@@ -86,6 +88,7 @@ namespace DatabaseMvcWebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public RedirectToRouteResult DeleteEmployee(string id = null, string forename = null, string surname = null, string dob = null,
             string role = null, string room = null)
         {

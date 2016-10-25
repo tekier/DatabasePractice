@@ -75,6 +75,7 @@
 
         @using (Html.BeginForm("UpdateNewRoom", "UpdateRooms", FormMethod.Post))
         {
+            @Html.AntiForgeryToken()
             <h3>Search by these fields:</h3>
             <label>
                 <b>Update by ID only</b>

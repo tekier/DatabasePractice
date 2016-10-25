@@ -19,6 +19,7 @@ namespace DatabaseMvcWebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public RedirectToRouteResult UpdateNewRoom(string id, string size = null, string floor = null,
             string capacity = null)
         {

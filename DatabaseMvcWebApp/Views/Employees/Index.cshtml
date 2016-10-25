@@ -69,6 +69,7 @@
     
     @using (Html.BeginForm("Index", "Employees", FormMethod.Post))
     {
+        @Html.AntiForgeryToken()
         <h3>Search by these fields:</h3>
         <label>
             ID
@@ -107,6 +108,7 @@
     
     @using (Html.BeginForm("AddNewEmployee", "Employees", FormMethod.Post))
     {
+        @Html.AntiForgeryToken()
         <h3>Add a new employee:</h3>
 
         <label>
@@ -141,6 +143,7 @@
 
     @using (Html.BeginForm("DeleteEmployee", "Employees", FormMethod.Post))
     {
+        @Html.AntiForgeryToken()
         <h3>Delete an existing employee:</h3>
 
         <label>

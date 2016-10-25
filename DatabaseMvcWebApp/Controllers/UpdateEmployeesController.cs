@@ -18,7 +18,8 @@ namespace DatabaseMvcWebApp.Controllers
             return View(model);
         }
 
-        [HttpPost]
+        [HttpPost] 
+        [ValidateAntiForgeryToken]
         public RedirectToRouteResult UpdateNewEmployee(string id, string forename = null, string surname = null, string dob = null,
             string role = null, string room = null)
         {

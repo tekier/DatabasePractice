@@ -18,6 +18,7 @@ namespace DatabaseMvcWebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Index(string id = null, string size = null, string floor = null, string capacity = null)
         {
             if (!id.IsNullOrWhiteSpace())
@@ -41,6 +42,7 @@ namespace DatabaseMvcWebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public RedirectToRouteResult AddNewRoom(string size = null, string floor = null, string capacity = null)
         {
 
