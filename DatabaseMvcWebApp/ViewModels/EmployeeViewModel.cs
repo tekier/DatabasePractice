@@ -28,6 +28,11 @@ namespace DatabaseMvcWebApp.ViewModels
             };
         }
 
+        public void UpdateEmployee()
+        {
+            facade.UpdateInTable(tableName);
+        }
+
         public void AddNewEmployee()
         {
             facade.AddRowTo(tableName);

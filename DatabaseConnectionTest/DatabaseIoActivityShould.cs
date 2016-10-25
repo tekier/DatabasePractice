@@ -26,7 +26,7 @@ namespace DatabaseConnectionTest
             string expectedOutput = "Renek";
             List<Tuple<string, string>> parameters = new List<Tuple<string, string>>
             {
-                Tuple.Create("@Surname", "Smallings")
+                Tuple.Create("@Surname", "Bigg")
             };
             string actualOutput = databaseInitTestObject.DatabaseReadActivity.GetRowFromTableByNameWithProcedure(
                 parameters, "SelectFromEmployees", "FORENAME")[0];

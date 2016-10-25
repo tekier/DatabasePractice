@@ -8,12 +8,14 @@ namespace DatabaseConnection
         private DatabaseReadActivity ReadAccessObject;
         private DatabaseWriteActivity WriteAccessObject;
         private DatabaseDeleteActivity DeleteAccessObject;
+        private DatabaseUpdateActivity UpdateAccessObject;
         private const string StoredProcedureToGetEmployee = "SelectFromEmployees";
         private const string StoredProcedureToGetRoom = "SelectFromRooms";
         private const string StoredProcedureToAddEmployee = "InsertNewEmployee";
         private const string StoredProcedureToAddRoom = "InsertNewRoom";
         private const string StoredProcedureToDeleteEmployee = "DeleteFromEmployees";
         private const string StoredProcedureToDeleteRoom = "DeleteFromRooms";
+        private const string StoredProcedureToUpdateEmployee = "UpdateEmployee";
         private List<Tuple<string, string>> ListOfParameters;
 
         public DatabaseFacade()
@@ -21,6 +23,7 @@ namespace DatabaseConnection
             ReadAccessObject = new DatabaseReadActivity();
             WriteAccessObject = new DatabaseWriteActivity();
             DeleteAccessObject = new DatabaseDeleteActivity();
+            UpdateAccessObject = new DatabaseUpdateActivity();
             ListOfParameters = new List<Tuple<string, string>>();
         }
 
@@ -126,6 +129,36 @@ namespace DatabaseConnection
         {
             DeleteAccessObject.DeleteRowFromTableByNameWithStoredProcedure(ListOfParameters, StoredProcedureToDeleteEmployee);
         }
-    }
 
+        /*---------------------------------------------------------------------------------------------------------------------------*/
+
+        public void UpdateInTable(string whichTable)
+        {
+            try
+            {
+                if (whichTable.ToLower() == "employees")
+                {
+                    UpdateRowsInEmployees();
+                }
+                if (whichTable.ToLower() == "rooms")
+                {
+                    UpdateRowsInRooms();
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+        }
+
+        private void UpdateRowsInRooms()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void UpdateRowsInEmployees()
+        {
+            UpdateAccessObject.UpdateRowInDatabase(ListOfParameters, StoredProcedureToUpdateEmployee);
+        }
+    }
 }

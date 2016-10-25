@@ -43,6 +43,7 @@
     <Compile Include="DatabaseReadActivity.cs" />
     <Compile Include="DatabaseFacade.cs" />
     <Compile Include="DatabaseInitialiser.cs" />
+    <Compile Include="DatabaseUpdateActivity.cs" />
     <Compile Include="DatabaseWriteActivity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
