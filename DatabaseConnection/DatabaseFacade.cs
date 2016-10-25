@@ -16,6 +16,7 @@ namespace DatabaseConnection
         private const string StoredProcedureToDeleteEmployee = "DeleteFromEmployees";
         private const string StoredProcedureToDeleteRoom = "DeleteFromRooms";
         private const string StoredProcedureToUpdateEmployee = "UpdateEmployee";
+        private const string StoredProcedureToUpdateRoom = "UpdateRoom";
         private List<Tuple<string, string>> ListOfParameters;
 
         public DatabaseFacade()
@@ -153,7 +154,7 @@ namespace DatabaseConnection
 
         private void UpdateRowsInRooms()
         {
-            throw new NotImplementedException();
+            UpdateAccessObject.UpdateRowInDatabase(ListOfParameters, StoredProcedureToUpdateRoom);
         }
 
         private void UpdateRowsInEmployees()

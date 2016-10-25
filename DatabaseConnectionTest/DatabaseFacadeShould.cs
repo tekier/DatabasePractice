@@ -76,12 +76,12 @@ namespace DatabaseConnectionTest
             SetUp();
             string inputParam1 = "@Surname";
             string inputParam2 = "@Role";
-            string inputParam2Value = "QA";
+            string inputParam2Value = "DEV";
             string inputParam1Value = "Nimusiima";
             facadeTestObject.AddParameter(inputParam2, inputParam2Value);
             facadeTestObject.AddParameter(inputParam1, inputParam1Value);
             string actualOutput = facadeTestObject.GetRowsUsing("Employees", "FORENAME")[0];
-            string expectedOutput = "Jimmy";
+            string expectedOutput = "Paul";
 
             actualOutput.Should().Be(expectedOutput);
         }

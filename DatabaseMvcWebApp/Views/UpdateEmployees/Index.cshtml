@@ -1,7 +1,114 @@
 ﻿@model DatabaseMvcWebApp.ViewModels.EmployeeViewModel
-
+<!--UpdateEmployees-->
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Update";
 }
 
-<h2>title</h2>
+<h2>Update Employees in Database</h2>
+
+<style>
+    table, th, td {
+        border: 3px solid gold;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 15px;
+    }
+</style>
+
+<style>
+    label, input {
+        display: block;
+    }
+
+    label {
+        margin-bottom: 20px;
+    }
+</style>
+
+<style>
+    .on-left {
+        float: left;
+    }
+
+    .on-right {
+        float: right;
+        padding: 25px;
+        border-radius: 30px;
+        border: 2px solid lightsteelblue;
+        background-color: honeydew;
+    }
+</style>
+
+<div class="on-left">
+    <table>
+        <tr>
+            @foreach (var item in Model.coloumnNames)
+            {
+                <th>
+                    <h4>
+                        <b>@item</b>
+                    </h4>
+                </th>
+            }
+        </tr>
+        @{
+            int count = 0;
+            int columns = Model.coloumnNames.Count;
+            int rows = (Model.employees.Count) / columns;
+            for (int i = 0; i < rows; i++)
+            {
+                <tr>
+                    @for (int j = 0; j < columns; j++)
+                    {
+                        <td>
+                            <h4>@Model.employees[count]</h4>
+                        </td>
+                        count = count + 1;
+                    }
+                </tr>
+            }
+        }
+    </table>
+</div>
+<div class="on-right">
+
+    @using (Html.BeginForm("UpdateNewEmployee", "UpdateEmployees", FormMethod.Post))
+    {
+        <h3>Search by these fields:</h3>
+        <label>
+            <b>Update by ID only</b>
+            <input type="text" name="id" />
+        </label>
+        <h3>Enter updated values:</h3>
+        <label>
+            First Name
+            <input type="text" name="forename" />
+        </label>
+
+        <label>
+            Surname
+            <input type="text" name="surname" />
+        </label>
+
+        <label>
+            DOB
+            <input type="text" name="dob" placeholder="YYYY-MM-DD" />
+        </label>
+
+        <label>
+            Role
+            <input type="text" name="role" />
+        </label>
+
+        <label>
+            Room
+            <input type="text" name="room" />
+        </label>
+
+        <label>
+            <input type="submit" value="Update" />
+        </label>
+    }
+</div>

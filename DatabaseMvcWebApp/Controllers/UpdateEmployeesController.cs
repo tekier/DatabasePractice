@@ -19,39 +19,6 @@ namespace DatabaseMvcWebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string id = null, string forename = null, string surname = null, string dob = null,
-            string role = null, string room = null)
-        {
-            if (!id.IsNullOrWhiteSpace())
-            {
-                model.SearchById(id);
-            }
-            if (!forename.IsNullOrWhiteSpace())
-            {
-                model.SearchByFirstName(forename);
-            }
-            if (!surname.IsNullOrWhiteSpace())
-            {
-                model.SearchBySurname(surname);
-            }
-            if (!dob.IsNullOrWhiteSpace())
-            {
-                model.SearchByDob(dob);
-            }
-            if (!role.IsNullOrWhiteSpace())
-            {
-                model.SearchByRole(role);
-            }
-            if (!room.IsNullOrWhiteSpace())
-            {
-                model.SearchByRoom(room);
-            }
-
-            model.RefreshTable();
-            return View(model);
-        }
-
-        [HttpPost]
         public RedirectToRouteResult UpdateNewEmployee(string id, string forename = null, string surname = null, string dob = null,
             string role = null, string room = null)
         {
@@ -85,10 +52,8 @@ namespace DatabaseMvcWebApp.Controllers
             {
                 model.SearchByRoom(room);
             }
-            if (room != null)
-            {
-                model.UpdateEmployee();
-            }
+            model.UpdateEmployee();
+            model.RefreshTable();
             return RedirectToAction("Index");
         }
     }

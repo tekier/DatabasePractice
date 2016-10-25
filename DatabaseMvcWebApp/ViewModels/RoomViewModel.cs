@@ -25,6 +25,11 @@ namespace DatabaseMvcWebApp.ViewModels
                 "Capacity"
             };
         }
+
+        public void UpdateRoom()
+        {
+            facade.UpdateInTable(tableName);
+        }
         
         public void AddNewRoom()
         {

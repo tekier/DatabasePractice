@@ -166,6 +166,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Controllers\UpdateEmployeesController.cs" />
+    <Compile Include="Controllers\UpdateRoomsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -238,6 +239,7 @@
     <Content Include="Views\Employees\SearchBy.cshtml" />
     <Content Include="Views\Rooms\Index.cshtml" />
     <None Include="Views\UpdateEmployees\Index.cshtml" />
+    <None Include="Views\UpdateRooms\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
