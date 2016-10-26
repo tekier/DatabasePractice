@@ -40,7 +40,9 @@
         background-color: honeydew;
     }
 </style>
-
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 <div class="on-left">
     <table>
         <tr>
@@ -80,32 +82,38 @@
         <h3>Search by these fields:</h3>
         <label>
             <b>Update by ID only</b>
-            <input type="text" name="id" />
+            <input type="text" name="id" data-val="true" data-val-required="An id is required" data-val-regex="Must be valid id" data-val-regex-pattern="([1-9][0-9]*)" />
+            <span class="field-validation-valid" data-valmsg-for="id" data-valmsg-replace="true"></span>
         </label>
         <h3>Enter updated values:</h3>
         <label>
             First Name
-            <input type="text" name="forename" />
+            <input type="text" name="forename" data-val="true" data-val-maxlength="Max 63 characters" data-val-maxlength-max="63" />
+            <span class="field-validation-valid" data-valmsg-for="forename" data-valmsg-replace="true"></span>
         </label>
 
         <label>
             Surname
-            <input type="text" name="surname" />
+            <input type="text" name="surname" data-val="true" data-val-maxlength="Max 63 characters" data-val-maxlength-max="63" />
+            <span class="field-validation-valid" data-valmsg-for="surname" data-valmsg-replace="true"></span>
         </label>
 
         <label>
             DOB
             <input type="text" name="dob" placeholder="YYYY-MM-DD" />
+            <span class="field-validation-valid" data-valmsg-for="dob" data-valmsg-replace="true"></span>
         </label>
 
         <label>
             Role
-            <input type="text" name="role" />
+            <input type="text" name="role" data-val="true" data-val-maxlength="Max 63 characters" data-val-maxlength-max="63" />
+            <span class="field-validation-valid" data-valmsg-for="role" data-valmsg-replace="true"></span>
         </label>
 
         <label>
             Room
-            <input type="text" name="room" />
+            <input type="text" name="room" data-val="true" data-val-regex="Must be valid number" data-val-regex-pattern="([1-9][0-9]*)" />
+            <span class="field-validation-valid" data-valmsg-for="room" data-valmsg-replace="true"></span>
         </label>
 
         <label>

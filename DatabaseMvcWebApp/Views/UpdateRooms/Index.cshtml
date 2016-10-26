@@ -3,106 +3,109 @@
 @{
     ViewBag.Title = "update";
 }
-    <h2>Update Rooms in Database</h2>
+<h2>Update Rooms in Database</h2>
 
-    <style>
-        table, th, td {
-            border: 3px solid gold;
-            border-collapse: collapse;
-        }
+     <style>
+         table, th, td {
+             border: 3px solid gold;
+             border-collapse: collapse;
+         }
 
-        th, td {
-            padding: 15px;
-        }
-    </style>
+         th, td {
+             padding: 15px;
+         }
+     </style>
 
-    <style>
-        label, input {
-            display: block;
-        }
+<style>
+    label, input {
+        display: block;
+    }
+    label {
+        margin-bottom: 20px;
+    }
+</style>
 
-        label {
-            margin-bottom: 20px;
-        }
-    </style>
+<style>
+    .on-left {
+        float: left;
+    }
 
-    <style>
-        .on-left {
-            float: left;
-        }
-
-        .on-right {
-            float: right;
-            padding: 25px;
-            border-radius: 30px;
-            border: 2px solid lightsteelblue;
-            background-color: honeydew;
-        }
-    </style>
-
-@*<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquey-1.6.2.js"></script>
-<script src ="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.8.1/jquery.validate.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>*@
+    .on-right {
+        float: right;
+        padding: 25px;
+        border-radius: 30px;
+        border: 2px solid lightsteelblue;
+        background-color: honeydew;
+    }
+</style>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 
 <div class="on-left">
-        <table>
-            <tr>
-                @foreach (var item in Model.coloumnNames)
-                {
-                    <th>
-                        <h4>
-                            <b>@item</b>
-                        </h4>
-                    </th>
-                }
-            </tr>
-            @{
-                int count = 0;
-                int columns = Model.coloumnNames.Count;
-                int rows = (Model.rooms.Count) / columns;
-                for (int i = 0; i < rows; i++)
-                {
-                    <tr>
-                        @for (int j = 0; j < columns; j++)
-                        {
-                            <td>
-                                <h4>@Model.rooms[count]</h4>
-                            </td>
-                            count = count + 1;
-                        }
-                    </tr>
-                }
+    <table>
+        <tr>
+            @foreach (var item in Model.coloumnNames)
+            {
+                <th>
+                    <h4>
+                        <b>@item</b>
+                    </h4>
+                </th>
             }
-        </table>
-    </div>
-    <div class="on-right">
-
-        @using (Html.BeginForm("UpdateNewRoom", "UpdateRooms", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            <h3>Search by these fields:</h3>
-            <label>
-                <b>Update by ID only</b>
-                <input type="text" name="id" />
-            </label>
-            <h3>Enter updated values:</h3>
-            <label>
-                Size
-                <input type="text" name="size" />
-            </label>
-
-            <label>
-                Floor
-                <input type="text" name="floor" />
-            </label>
-
-            <label>
-                Capacity
-                <input type="text" name="capacity" />
-            </label>
-
-            <label>
-                <input type="submit" value="Filter">
-            </label>
+        </tr>
+        @{
+            int count = 0;
+            int columns = Model.coloumnNames.Count;
+            int rows = (Model.rooms.Count) / columns;
+            for (int i = 0; i < rows; i++)
+            {
+                <tr>
+                    @for (int j = 0; j < columns; j++)
+                    {
+                        <td>
+                            <h4>@Model.rooms[count]</h4>
+                        </td>
+                        count = count + 1;
+                    }
+                </tr>
+            }
         }
-    </div>
+    </table>
+</div>
+<div class="on-right">
+
+    @using (Html.BeginForm("UpdateNewRoom", "UpdateRooms", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <h3>Search by these fields:</h3>
+        <label>
+            <b>Update by ID only</b>
+            <input type="text" name="id" data-val="true" data-val-required="An id is required" data-val-regex="Must be valid id" data-val-regex-pattern="([1-9][0-9]*)"/>
+            <span class="field-validation-valid" data-valmsg-for="id" data-valmsg-replace="true"></span>
+        </label>
+
+        <h3>Enter updated values:</h3>
+        <label>
+            Size
+            <input type="text" name="size" data-val="true" data-val-maxlength="Max 63 characters" data-val-maxlength-max="63"/>
+            <span class="field-validation-valid" data-valmsg-for="size" data-valmsg-replace="true"></span>
+        </label>
+
+        <label>
+            Floor
+            <input type="text" name="floor" data-val="true" data-val-range="Must be between 1 and 6" data-val-range-max="6" data-val-range-min="1"/>
+            <span class="field-validation-valid" data-valmsg-for="floor" data-valmsg-replace="true"></span>
+        </label>
+
+        <label>
+            Capacity
+            <input type="text" name="capacity" data-val="true" data-val-regex="Enter valid number" data-val-regex-pattern="([1-9][0-9]*)" />
+            <span class="field-validation-valid" data-valmsg-for="capacity" data-valmsg-replace="true"></span>
+        </label>
+
+        <label>
+            <input type="submit" value="Update">
+        </label>
+    }
+</div>
