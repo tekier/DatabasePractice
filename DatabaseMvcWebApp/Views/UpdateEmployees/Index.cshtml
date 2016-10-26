@@ -79,7 +79,7 @@
     @using (Html.BeginForm("UpdateNewEmployee", "UpdateEmployees", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        <h3>Search by these fields:</h3>
+        <h3>Search by this field:</h3>
         <label>
             <b>Update by ID only</b>
             <input type="text" name="id" data-val="true" data-val-required="An id is required" data-val-regex="Must be valid id" data-val-regex-pattern="([1-9][0-9]*)" />

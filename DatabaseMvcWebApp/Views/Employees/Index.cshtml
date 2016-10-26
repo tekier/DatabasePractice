@@ -12,17 +12,25 @@
         border-collapse: collapse;
     }
 
-    th, td { padding: 15px; }
+    th, td {
+        padding: 15px;
+    }
 </style>
 
 <style>
-    label, input { display: block; }
+    label, input {
+        display: block;
+    }
 
-    label { margin-bottom: 20px; }
+    label {
+        margin-bottom: 20px;
+    }
 </style>
 
 <style>
-    .on-left { float: left; }
+    .on-left {
+        float: left;
+    }
 
     .on-right {
         float: right;
@@ -32,7 +40,9 @@
         background-color: honeydew;
     }
 </style>
-
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 <div class="on-left">
     <table>
         <tr>
@@ -48,7 +58,7 @@
         @{
             int count = 0;
             int columns = Model.coloumnNames.Count;
-            int rows = (Model.employees.Count)/columns;
+            int rows = (Model.employees.Count) / columns;
             for (int i = 0; i < rows; i++)
             {
                 <tr>
@@ -66,74 +76,88 @@
 </div>
 
 <div class="on-right">
-    
+
     @using (Html.BeginForm("Index", "Employees", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
         <h3>Search by these fields:</h3>
         <label>
             ID
-            <input type="text" name="id"/>
+            <input type="text" name="id" data-val="true" data-val-regex="Must be valid id" data-val-regex-pattern="([1-9][0-9]*)" />
+            <span class="field-validation-valid" data-valmsg-for="id" data-valmsg-replace="true"></span>
         </label>
 
         <label>
             First Name
-            <input type="text" name="forename"/>
+            <input type="text" name="forename" data-val="true" data-val-maxlength="Max 63 characters" data-val-maxlength-max="63" />
+            <span class="field-validation-valid" data-valmsg-for="forename" data-valmsg-replace="true"></span>
         </label>
 
         <label>
             Surname
-            <input type="text" name="surname"/>
+            <input type="text" name="surname" data-val="true" data-val-maxlength="Max 63 characters" data-val-maxlength-max="63" />
+            <span class="field-validation-valid" data-valmsg-for="surname" data-valmsg-replace="true"></span>
         </label>
 
         <label>
             DOB
-            <input type="text" name="dob" placeholder="YYYY-MM-DD"/>
+            <input type="text" name="dob" placeholder="YYYY-MM-DD" />
+            <span class="field-validation-valid" data-valmsg-for="dob" data-valmsg-replace="true"></span>
+
         </label>
 
         <label>
             Role
-            <input type="text" name="role"/>
+            <input type="text" name="role" data-val="true" data-val-maxlength="Max 63 characters" data-val-maxlength-max="63" />
+            <span class="field-validation-valid" data-valmsg-for="role" data-valmsg-replace="true"></span>
         </label>
 
         <label>
             Room
-            <input type="text" name="room"/>
+            <input type="text" name="room" data-val="true" data-val-regex="Must be valid number" data-val-regex-pattern="([1-9][0-9]*)" />
+            <span class="field-validation-valid" data-valmsg-for="room" data-valmsg-replace="true"></span>
         </label>
 
         <label>
-            <input type="submit" value="Filter"/>
+            <input type="submit" value="Filter" />
         </label>
     }
-    
+
     @using (Html.BeginForm("AddNewEmployee", "Employees", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
         <h3>Add a new employee:</h3>
 
         <label>
-            First Name<i> (optional)</i>
-            <input type="text" name="forename" />
+            First Name
+            <input type="text" name="forename" data-val="true" data-val-maxlength="Max 63 characters" data-val-maxlength-max="63" />
+            <span class="field-validation-valid" data-valmsg-for="forename" data-valmsg-replace="true"></span>
         </label>
 
         <label>
-            Surname
-            <input type="text" name="surname" />
+            Surname <i>(required)</i>
+            <input type="text" name="surname" data-val="true" data-val-required="Required" data-val-maxlength="Max 63 characters" data-val-maxlength-max="63" />
+            <span class="field-validation-valid" data-valmsg-for="surname" data-valmsg-replace="true"></span>
+
         </label>
 
         <label>
-            DOB<i> (optional) </i>
-            <input type="text" name="dob" placeholder="YYYY-MM-DD"/>
+            DOB
+            <input type="text" name="dob" placeholder="YYYY-MM-DD" />
+            <span class="field-validation-valid" data-valmsg-for="dob" data-valmsg-replace="true"></span>
+
         </label>
 
         <label>
             Role
-            <input type="text" name="role" />
+            <input type="text" name="role" data-val="true" data-val-maxlength="Max 63 characters" data-val-maxlength-max="63" />
+            <span class="field-validation-valid" data-valmsg-for="role" data-valmsg-replace="true"></span>
         </label>
 
         <label>
-            Room
-            <input type="text" name="room" />
+            Room <i>(required)</i>
+            <input type="text" name="room" data-val="true" data-val-required="Required" data-val-regex="Must be valid number" data-val-regex-pattern="([1-9][0-9]*)" />
+            <span class="field-validation-valid" data-valmsg-for="room" data-valmsg-replace="true"></span>
         </label>
 
         <label>
@@ -145,37 +169,47 @@
     {
         @Html.AntiForgeryToken()
         <h3>Delete an existing employee:</h3>
+        <label>
+            ID
+            <input type="text" name="id" data-val="true" data-val-regex="Must be valid id" data-val-regex-pattern="([1-9][0-9]*)" />
+            <span class="field-validation-valid" data-valmsg-for="id" data-valmsg-replace="true"></span>
+        </label>
 
         <label>
             First Name
-            <input type="text" name="forename"/>
+            <input type="text" name="forename" data-val="true" data-val-maxlength="Max 63 characters" data-val-maxlength-max="63" />
+            <span class="field-validation-valid" data-valmsg-for="forename" data-valmsg-replace="true"></span>
         </label>
 
         <label>
             Surname
-            <input type="text" name="surname"/>
+            <input type="text" name="surname" data-val="true" data-val-maxlength="Max 63 characters" data-val-maxlength-max="63" />
+            <span class="field-validation-valid" data-valmsg-for="surname" data-valmsg-replace="true"></span>
         </label>
 
         <label>
             DOB
-            <input type="text" name="dob" placeholder="YYYY-MM-DD"/>
+            <input type="text" name="dob" placeholder="YYYY-MM-DD" />
+            <span class="field-validation-valid" data-valmsg-for="surname" data-valmsg-replace="true"></span>
         </label>
 
         <label>
             Role
-            <input type="text" name="role"/>
+            <input type="text" name="role" data-val="true" data-val-maxlength="Max 63 characters" data-val-maxlength-max="63" />
+            <span class="field-validation-valid" data-valmsg-for="role" data-valmsg-replace="true"></span>
         </label>
 
         <label>
             Room
-            <input type="text" name="room"/>
+            <input type="text" name="room" data-val="true" data-val-regex="Must be valid number" data-val-regex-pattern="([1-9][0-9]*)" />
+            <span class="field-validation-valid" data-valmsg-for="room" data-valmsg-replace="true"></span>
         </label>
 
         <label>
-            <input type="submit" value="Delete employee"/>
+            <input type="submit" value="Delete employee" />
         </label>
     }
 
-    
+
 </div>
 <div class="clear"></div>
